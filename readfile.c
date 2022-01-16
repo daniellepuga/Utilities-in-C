@@ -1,14 +1,17 @@
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-#define BUFSIZE 1000
 int main(int argc, char *argv[])
 {
-    FILE *fp = fopen(argv[1], "r");
-    char buff[BUFSIZE];
-    
-    while(fgets(buff, BUFSIZE - 1, fp) != NULL) 
+    int fd = open(argv[1], O_RDONLY);
+    char buff[2048];
+    int count = 1;
+
+    while(count!= 0) 
     {
-        printf ("%s", buff); 
+        count = read(fd, buff, 2048);
+        write(1, buff, count);
     }
-    fclose(fp);
+    close(fd);
 }
