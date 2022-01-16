@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         while (--argc > 0)
             if ((fd = open(*++argv, O_RDONLY)) == -1)
             {
-                perror("cat error:can't open %s");
+                perror("cat error:can't open file");
             }
             else
             {
