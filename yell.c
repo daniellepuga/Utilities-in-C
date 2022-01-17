@@ -10,22 +10,19 @@ void filecopy(int ifd, int ofd)
     int n;
     char buf[BUFSIZ];
 
-    while ((n = read(ifd, buf, BUFSIZ)) > 0)
-         for(int i=0; i < n; i++)
-        {
-          buf[i] = toupper(buf[i]);
-        
-          if (write(ofd, buf, n) != n)
-          {
-            perror("cat error: cannot write");
-          }
-          }
+    do {
+      for(int i = 0 ;i < n; i++) 
+      {
+        buf[i] = toupper(buf[i]);
+      }
+      write(ofd, buf, n);
+    }
+    while ((n = read(ifd, buf, BUFSIZ)) > 0);
 }
 
 int main(int argc, char *argv[])
 {
     int fd;
-
     if (argc == 1)
     {
         filecopy(0, 1);
