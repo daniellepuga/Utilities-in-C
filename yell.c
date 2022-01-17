@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <ctype.h>
 
 void filecopy(int ifd, int ofd)
 {
@@ -10,14 +11,21 @@ void filecopy(int ifd, int ofd)
     char buf[BUFSIZ];
 
     while ((n = read(ifd, buf, BUFSIZ)) > 0)
-        if (write(ofd, buf, n) != n)
+         for(int i=0; i < n; i++)
         {
+          buf[i] = toupper(buf[i]);
+        
+          if (write(ofd, buf, n) != n)
+          {
             perror("cat error: cannot write");
-        }
+          }
+          }
 }
+
 int main(int argc, char *argv[])
 {
     int fd;
+
     if (argc == 1)
     {
         filecopy(0, 1);
@@ -34,3 +42,9 @@ int main(int argc, char *argv[])
                 close(fd);
             }
 }
+
+
+//for(int i=0; buff[i]!='\0'; i++)
+        // {
+        // buff[i] = toupper(buff[i]);
+        // }
